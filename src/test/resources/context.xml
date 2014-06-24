@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context path="/">
+    <Resource name="dbtest" auth="Container" type="javax.sql.DataSource"
+              username="root" password=""
+              url="jdbc:mysql://localhost:3306/hibernatetest"
+              driverClassName="com.mysql.jdbc.Driver"
+
+            />
+
+</Context>
