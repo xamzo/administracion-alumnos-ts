@@ -3,6 +3,7 @@ package cl.ubb.spring.web.administracionalumnosts.service;
 import cl.ubb.spring.web.administracionalumnosts.dao.UsuarioDAO;
 import cl.ubb.spring.web.administracionalumnosts.model.Rol;
 import cl.ubb.spring.web.administracionalumnosts.model.Usuario;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -25,28 +26,27 @@ import java.util.List;
  */
 @Service
 public class UbbUserDetailsService implements UserDetailsService {
-
+    static Logger log = Logger.getLogger(UbbUserDetailsService.class.getName());
     @Autowired
     private UsuarioDAO usuarioDAO;
 
     @Transactional
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        log.info("inicia login");
+        System.out.println("sout unucia login");
         Usuario usuario = null;
         usuario = usuarioDAO.findByUserName(username);
-
+        if (usuario == null) {
+            throw new UsernameNotFoundException("Usuario no encontrado");
+        }
         List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
-        List<Rol>roles=usuario.getRoles();
-        for (Rol rol:roles) {
+        List<Rol> roles = usuario.getRoles();
+        for (Rol rol : roles) {
             authorities.add(new SimpleGrantedAuthority(rol.getName()));
         }
-
-
-
-
-        User user= new User(usuario.getUsername(),usuario.getPassword(),
-        true,true, true, true,authorities);
-
+        User user = new User(usuario.getUsername(), usuario.getPassword(), true, true, true, true, authorities);
+        log.info("Retorna el usuario");
         return user;
     }
 

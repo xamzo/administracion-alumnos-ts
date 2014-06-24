@@ -1,5 +1,6 @@
 package cl.ubb.spring.web.administracionalumnosts.controller;
 
+import cl.ubb.spring.web.administracionalumnosts.model.Rol;
 import cl.ubb.spring.web.administracionalumnosts.model.Usuario;
 import cl.ubb.spring.web.administracionalumnosts.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -28,14 +30,20 @@ public class HelloControler {
     @RequestMapping(value = {"/"}, method = RequestMethod.GET)
     public ModelAndView home() {
 
-        //Usuario usuario = new Usuario();
-
-        //usuario.setApellido("apellido");
-        //usuario.setNombre("nombre");
-        //usuario.setRut("rut");
-        //usuario.setUsername("ubb");
-        //usuario.setPassword("1234");
-        //usuarioService.create(usuario);
+//        Usuario usuario = new Usuario();
+//        usuario.setApellido("apellido");
+//        usuario.setNombre("nombre");
+//        usuario.setRut("rut");
+//        usuario.setUsername("ubb");
+//        usuario.setPassword("1234");
+//
+//        Rol r= new Rol();
+//        r.setName("ROL_ADMIN");
+//        List roles= new  ArrayList<Rol>();
+//        roles.add(r);
+//        usuario.setRoles(roles);
+//
+//        usuarioService.create(usuario);
 
         List<Usuario> user=usuarioService.getAll();
         System.out.println("lista de usuario111: "+user);
@@ -50,13 +58,9 @@ public class HelloControler {
 
     @RequestMapping(value = {"/admin**",}, method = RequestMethod.GET)
     public ModelAndView admin() {
-
-
         ModelAndView model = new ModelAndView("admin");
         return model;
-
     }
-
 
     public UsuarioService getUsuarioService() {
         return usuarioService;

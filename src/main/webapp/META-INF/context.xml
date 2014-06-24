@@ -3,5 +3,4 @@
     <ResourceLink name="dbtest"
                   global="dbtest"
                   type="javax.sql.DataSource"/>
-
 </Context>

@@ -22,12 +22,12 @@ public class UsuarioService {
     private UsuarioDAO usuarioDAO;
 
     @Transactional
-    public List<Usuario> getAll(){
+    public List<Usuario> getAll() {
         return usuarioDAO.find();
     }
 
     @Transactional
-    public void create(Usuario usuario){
+    public void create(Usuario usuario) {
         usuarioDAO.save(usuario);
     }
 

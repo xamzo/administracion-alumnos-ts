@@ -20,6 +20,20 @@
 
 
     <dependencies>
+        <!-- CODIFICACION UBB-->
+        <dependency>
+            <groupId>commons-codec</groupId>
+            <artifactId>commons-codec</artifactId>
+            <version>1.5</version>
+        </dependency>
+
+        <!-- log4j -->
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>1.2.17</version>
+        </dependency>
+
         <!-- jstl para jsp-->
         <dependency>
             <groupId>jstl</groupId>
@@ -67,28 +81,26 @@
             <version>${spring-security.version}</version>
         </dependency>
 
-</dependencies>
+    </dependencies>
     <build>
-
-
         <plugins>
-    <plugin>
-        <groupId>org.apache.tomcat.maven</groupId>
-        <artifactId>tomcat7-maven-plugin</artifactId>
-        <version>2.2</version>
-        <configuration>
-            <path>/</path>
-            <contextFile>src/test/resources/context.xml</contextFile>
+            <plugin>
+                <groupId>org.apache.tomcat.maven</groupId>
+                <artifactId>tomcat7-maven-plugin</artifactId>
+                <version>2.2</version>
+                <configuration>
+                    <path>/</path>
+                    <contextFile>src/test/resources/context.xml</contextFile>
 
-        </configuration>
-        <dependencies>
-            <dependency>
-                <groupId>mysql</groupId>
-                <artifactId>mysql-connector-java</artifactId>
-                <version>5.1.14</version>
-            </dependency>
-        </dependencies>
-    </plugin>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.14</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
         </plugins>
-</build>
+    </build>
 </project>

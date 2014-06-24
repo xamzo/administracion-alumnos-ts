@@ -24,15 +24,13 @@ public class Usuario {
     private String apellido;
     private String username;
     private String password;
+    private String email;
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="usuario_rol",
             joinColumns={@JoinColumn(name="usuario_id")},
             inverseJoinColumns={@JoinColumn(name="rol_id")})
     private List<Rol> roles;
-
-
-
 
     public List<Rol> getRoles() {
         return roles;
@@ -88,5 +86,13 @@ public class Usuario {
 
     public void setApellido(String apellido) {
         this.apellido = apellido;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

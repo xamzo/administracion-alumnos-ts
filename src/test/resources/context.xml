@@ -4,8 +4,5 @@
     <Resource name="dbtest" auth="Container" type="javax.sql.DataSource"
               username="root" password=""
               url="jdbc:mysql://localhost:3306/hibernatetest"
-              driverClassName="com.mysql.jdbc.Driver"
-
-            />
-
+              driverClassName="com.mysql.jdbc.Driver"/>
 </Context>
