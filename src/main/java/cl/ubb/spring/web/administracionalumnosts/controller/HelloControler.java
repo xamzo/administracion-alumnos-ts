@@ -38,7 +38,7 @@ public class HelloControler {
         //usuarioService.create(usuario);
 
         List<Usuario> user=usuarioService.getAll();
-        System.out.println("lista de usuario11: "+user);
+        System.out.println("lista de usuario111: "+user);
         String mensaje="Bienvenido (Mensaje desde el controller MVC)";
 
         ModelAndView model = new ModelAndView("index");
