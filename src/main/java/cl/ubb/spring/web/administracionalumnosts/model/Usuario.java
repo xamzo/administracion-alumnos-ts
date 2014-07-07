@@ -1,7 +1,6 @@
 package cl.ubb.spring.web.administracionalumnosts.model;
 
 
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,9 +16,10 @@ import java.util.List;
 public class Usuario {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String rut;
+    @Column(nullable = false)
     private String nombre;
     private String apellido;
     private String username;
@@ -27,9 +27,9 @@ public class Usuario {
     private String email;
 
     @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(name="usuario_rol",
-            joinColumns={@JoinColumn(name="usuario_id")},
-            inverseJoinColumns={@JoinColumn(name="rol_id")})
+    @JoinTable(name = "usuario_rol",
+            joinColumns = {@JoinColumn(name = "usuario_id")},
+            inverseJoinColumns = {@JoinColumn(name = "rol_id")})
     private List<Rol> roles;
 
     public List<Rol> getRoles() {

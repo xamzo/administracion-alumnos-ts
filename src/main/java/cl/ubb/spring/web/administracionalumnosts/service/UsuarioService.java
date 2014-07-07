@@ -31,7 +31,6 @@ public class UsuarioService {
         usuarioDAO.save(usuario);
     }
 
-
     public UsuarioDAO getUsuarioDAO() {
         return usuarioDAO;
     }
