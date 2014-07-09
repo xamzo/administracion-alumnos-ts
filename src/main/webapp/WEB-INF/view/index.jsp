@@ -1,5 +1,5 @@
-<%@page session="true"%>
-<%@ include file="header.jsp"%>
+<%@page session="true" %>
+<%@ include file="header.jsp" %>
 
 
 <h1>${mensaje}</h1>
@@ -24,4 +24,4 @@
 
 </script>
 <a href="<c:url value="tipoestado/admin"/>">AdminEstado</a>
-<%@ include file="footer.jsp"%>
+<%@ include file="footer.jsp" %>
