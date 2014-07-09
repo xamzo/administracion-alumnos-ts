@@ -18,10 +18,10 @@ import java.io.IOException;
 public class UploadController {
 
 
-
-    @RequestMapping(value = {"/upload-document"},method = RequestMethod.POST)
-    public @ResponseBody
-    String uploadFile(@RequestParam("name") String name,@RequestParam("file") MultipartFile file){
+    @RequestMapping(value = {"/upload-document"}, method = RequestMethod.POST)
+    public
+    @ResponseBody
+    String uploadFile(@RequestParam("name") String name, @RequestParam("file") MultipartFile file) {
         System.out.println("upload.............");
         if (!file.isEmpty()) {
             try {

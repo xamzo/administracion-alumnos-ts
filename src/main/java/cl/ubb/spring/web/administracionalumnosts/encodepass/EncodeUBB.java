@@ -3,6 +3,7 @@ package cl.ubb.spring.web.administracionalumnosts.encodepass;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.log4j.Logger;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -15,7 +16,7 @@ public class EncodeUBB implements PasswordEncoder {
 
     @Override
     public String encode(CharSequence charSequence) {
-        String pass=charSequence.toString();
+        String pass = charSequence.toString();
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-1");
@@ -33,7 +34,7 @@ public class EncodeUBB implements PasswordEncoder {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        log.info("pass "+hash);
+        log.info("pass " + hash);
         return hash;
     }
 
