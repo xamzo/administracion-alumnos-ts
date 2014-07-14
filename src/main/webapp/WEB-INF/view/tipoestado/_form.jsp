@@ -19,21 +19,20 @@
                 type: "POST",
                 success: function (data) {
                     if (data.status == "SUCCESS") {
+                        table.api().ajax.reload();
                         parent.$.fancybox.close();
-                        {
-                            $.ajax({
-                                url: '/tipoestado/lista',
-                                dataType: 'json',
-                                type: 'GET',
-                                success: function (data, textStatus, jqXHR) {
-                                    // since we are using jQuery, you don't need to parse response
-                                    drawTable(data);
-                                }
-                            });
-                        }
                         $('#mess-success').html(data.result).fadeIn().animate({opacity: 1.0}, 5000).fadeOut('slow');
                     } else {
-                        $('#mess-error').html(data.result).fadeIn().animate({opacity: 1.0}, 5000).fadeOut('slow');
+                        var errorInfo = "";
+
+                        for (i = 0; i < data.result.length; i++) {
+                            //  alert('#' + data.result[i].field + '.errors');
+                            $('#nombreTipoEstado.errors').append(data.result[i].code);
+                            $('#nombreTipoEstado.errors').show();
+
+                            errorInfo += "<br>" + (i + 1) + ". " + data.result[i].code;
+                        }
+                        $('#mess-errors-form').html(errorInfo).fadeIn().animate({opacity: 1.0}, 5000).fadeOut('slow');
                     }
                 },
                 beforeSend: function (xhr) {
@@ -47,21 +46,20 @@
 
     });
 </script>
+<p class="bg-error" id="mess-errors-form" style="display: none;"></p>
+<form:form id="formTipoEstado" method="post" class="form-horizontal" role="form" modelAttribute="tipoEstado">
 
-<form:form id="formTipoEstado" method="post" modelAttribute="tipoEstado">
+    <div class="form-group">
+        <form:label path="nombreTipoEstado" class="col-sm-2 control-label">Nombre</form:label>
+        <div class="col-sm-6">
+            <form:input path="nombreTipoEstado"/>
+            <span id="nombreTipoEstado.errors" style="display: none;"></span>
+        </div>
+    </div>
 
-    <table>
-        <tr>
-            <td><form:label path="nombreTipoEstado">Nombre</form:label></td>
-            <td><form:input path="nombreTipoEstado"/></td>
-            <td><form:errors path="nombreTipoEstado"/></td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <!-- <button value="Guardar">Guardar</button> -->
-                <input type="submit" class="btn btn-primary" value="Guardar">
-            </td>
-        </tr>
-    </table>
-
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-6">
+            <input type="submit" class="btn btn-primary" value="Guardar">
+        </div>
+    </div>
 </form:form>

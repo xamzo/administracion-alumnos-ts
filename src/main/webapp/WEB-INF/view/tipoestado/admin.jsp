@@ -1,37 +1,18 @@
 <%@page session="true" %>
 <%@ include file="../header.jsp" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!-- JQuery CSS -->
 <link href="<c:url value="/resources/fancybox/source/jquery.fancybox.css" />" rel="stylesheet">
-<script type="text/javascript" src="<c:url value="/resources/fancybox/lib/jquery-1.10.1.min.js" />"></script>
-<script type="text/javascript" src="<c:url value="/resources/fancybox/source/jquery.fancybox.pack.js" />"></script>
-<script type="text/javascript">
-    $.ajax({
-        url: '/tipoestado/lista',
-        dataType: 'json',
-        type: 'GET',
-        success: function (data, textStatus, jqXHR) {
-            // since we are using jQuery, you don't need to parse response
-            drawTable(data);
-        }
-    });
-    function drawTable(data) {
-        $("#gridTipoEstado tr").remove();
-        for (var i = 0; i < data.length; i++) {
-            drawRow(data[i]);
-        }
-    }
-    function drawRow(rowData) {
-        var row = $("<tr />")
-        $("#gridTipoEstado").append(row); //this will append tr element to table... keep its reference for a while since we will add cels into it
-        row.append($("<td>" + rowData.idTipoEstadoPk + "</td>"));
-        row.append($("<td>" + rowData.nombreTipoEstado + "</td>"));
-        row.append($("<td><a class=\"various fancybox.ajax\" href='/tipoestado/update/" + rowData.idTipoEstadoPk + "'>Editar</a></td>"));
-        row.append($("<td><a class=\"eliminar\" href=\"#\"  onClick=\"a_onClick(" + rowData.idTipoEstadoPk + ")\">Eliminar</a></td>"));
-    }
 
-</script>
+<script type="text/javascript" src="<c:url value="/resources/fancybox/source/jquery.fancybox.pack.js" />"></script>
+
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
+
+<script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+
 <script type="text/javascript">
+    var table;
     function a_onClick(id) {
         if (confirm('Esta Seguro de eliminar este item?')) {
             $.ajax({
@@ -39,18 +20,7 @@
                 type: 'DELETE',
                 success: function (res) {
                     if (res.status == "SUCCESS") {
-                        parent.$.fancybox.close();
-                        {
-                            $.ajax({
-                                url: '/tipoestado/lista',
-                                dataType: 'json',
-                                type: 'GET',
-                                success: function (data, textStatus, jqXHR) {
-                                    // since we are using jQuery, you don't need to parse response
-                                    drawTable(data);
-                                }
-                            });
-                        }
+                        table.api().ajax.reload();
                         $('#mess-success').html(res.result).fadeIn().animate({opacity: 1.0}, 5000).fadeOut('slow');
                     } else {
                         $('#mess-error').html(res.result).fadeIn().animate({opacity: 1.0}, 5000).fadeOut('slow');
@@ -61,7 +31,7 @@
         }
     }
 </script>
-<script type="text/javascript">
+<script>
     $(".various").fancybox({
         maxWidth: 800,
         type: 'ajax',
@@ -75,6 +45,37 @@
         closeEffect: 'fade'
     });
 </script>
+<script>
+    function refresh() {
+        table = $('#example').dataTable({
+            "language": {
+                "url": "<c:url value="/resources/spanish.json" />"
+            },
+            "sAjaxSource": "/tipoestado/lista",
+            "sAjaxDataProp": "",
+            "aoColumns": [
+                { "mData": "idTipoEstadoPk" },
+                { "mData": "nombreTipoEstado" },
+                {
+                    "mData": "idTipoEstadoPk",
+                    "mRender": function (dato) {
+                        return  "<a class='various fancybox.ajax' href='/tipoestado/update/" + dato + "'>Editar</a>";
+                    }
+                },
+                {
+                    "mData": "idTipoEstadoPk",
+                    "mRender": function (dato) {
+                        return  "<a href='#' onclick='js:a_onClick(" + dato + ")'>Eliminar</a>";
+                    }
+                }
+            ]
+        });
+    }
+
+    $(document).ready(function () {
+        refresh();
+    });
+</script>
 <div class="container">
     <h1>Tipo estado</h1>
 
@@ -82,12 +83,23 @@
 
     <p class="bg-error" id="mess-errors" style="display: none;"></p>
     <a class="various fancybox.ajax" href="<c:url value="/tipoestado/create"/>">Nuevo Tipo Estado</a>
-    <table id="gridTipoEstado" class="table table-borderer">
-        <thead>
-        <th>Id</th>
-        <th>Nombre</th>
-        </thead>
-    </table>
+    <form:form action="" method="GET">
+
+        <table width="70%" style="border: 3px;background: rgb(243, 244, 248);">
+            <tr>
+                <td>
+                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+                        <thead>
+                        <th>Id</th>
+                        <th>Nombre</th>
+                        <th></th>
+                        <th></th>
+                        </thead>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form:form>
 </div>
 
 <%@ include file="../footer.jsp" %>
