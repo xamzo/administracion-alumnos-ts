@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -65,11 +66,17 @@ public class TipoEstadoController {
     @ResponseBody
     JsonResponse saveUpdate(@RequestBody TipoEstado e, @PathVariable long id, BindingResult result) {
         e.setIdTipoEstadoPk(id);
-        tipoEstadoService.save(e);
         log.info("llega actualizar y debe retorn<r");
         JsonResponse res = new JsonResponse();
-        res.setStatus("SUCCESS");
-        res.setResult("Se ha Actualizado Correctamente");
+        ValidationUtils.rejectIfEmpty(result, "nombreTipoEstado", "El nombre no puede ser vacío");
+        if (!result.hasErrors()) {
+            tipoEstadoService.save(e);
+            res.setStatus("SUCCESS");
+            res.setResult("Se ha Insertado Correctamente");
+        } else {
+            res.setStatus("FAIL");
+            res.setResult(result.getAllErrors());
+        }
         return res;
     }
 
@@ -77,11 +84,17 @@ public class TipoEstadoController {
     public
     @ResponseBody
     JsonResponse guardar(@RequestBody TipoEstado e, BindingResult result) {
-        tipoEstadoService.save(e);
         log.info("llega a guardar y debe retorn<r");
         JsonResponse res = new JsonResponse();
-        res.setStatus("SUCCESS");
-        res.setResult("Se ha Insertado Correctamente");
+        ValidationUtils.rejectIfEmpty(result, "nombreTipoEstado", "El nombre no puede ser vacío");
+        if (!result.hasErrors()) {
+            tipoEstadoService.save(e);
+            res.setStatus("SUCCESS");
+            res.setResult("Se ha Insertado Correctamente");
+        } else {
+            res.setStatus("FAIL");
+            res.setResult(result.getAllErrors());
+        }
         return res;
     }
 
