@@ -47,7 +47,7 @@
 </script>
 <script>
     function refresh() {
-        table = $('#example').dataTable({
+        table = $('#example').DataTable({
             "language": {
                 "url": "<c:url value="/resources/spanish.json" />"
             },
@@ -68,8 +68,27 @@
                         return  "<a href='#' onclick='js:a_onClick(" + dato + ")'>Eliminar</a>";
                     }
                 }
-            ]
+            ],
+            "initComplete": function () {
+                $("#example tfoot th").each(function (i) {
+                    if (i < ($("#example tfoot th").size() - 2)) {
+
+                        var select = $('<select><option value=""></option></select>')
+                                .appendTo($(this).empty())
+                                .on('change', function () {
+                                    table.column(i)
+                                            .search('^' + $(this).val() + '$', true, false)
+                                            .draw();
+                                });
+                        table.column(i).data().unique().sort().each(function (d, j) {
+                            select.append('<option value="' + d + '">' + d + '</option>')
+                        });
+                    }
+                })
+            }
         });
+
+
     }
 
     $(document).ready(function () {
@@ -85,20 +104,27 @@
     <a class="various fancybox.ajax" href="<c:url value="/tipoestado/create"/>">Nuevo Tipo Estado</a>
     <form:form action="" method="GET">
 
-        <table width="70%" style="border: 3px;background: rgb(243, 244, 248);">
+
+        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+            <th>Id</th>
+            <th>Nombre</th>
+            <th></th>
+            <th></th>
+            </thead>
+            <tfoot>
             <tr>
-                <td>
-                    <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
-                        <thead>
-                        <th>Id</th>
-                        <th>Nombre</th>
-                        <th></th>
-                        <th></th>
-                        </thead>
-                    </table>
-                </td>
+                <th>id</th>
+                <th>Nombre</th>
+                <th></th>
+                <th></th>
             </tr>
+            </tfoot>
+            <tbody>
+
+            </tbody>
         </table>
+
     </form:form>
 </div>
 
