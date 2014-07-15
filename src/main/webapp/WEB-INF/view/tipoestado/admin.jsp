@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <!-- JQuery CSS -->
+
 <link href="<c:url value="/resources/fancybox/source/jquery.fancybox.css" />" rel="stylesheet">
 
 <script type="text/javascript" src="<c:url value="/resources/fancybox/source/jquery.fancybox.pack.js" />"></script>
@@ -10,6 +11,7 @@
 <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.0/css/jquery.dataTables.css">
 
 <script type="text/javascript" src="//cdn.datatables.net/1.10.0/js/jquery.dataTables.js"></script>
+
 
 <script type="text/javascript">
     var table;
@@ -47,7 +49,7 @@
 </script>
 <script>
     function refresh() {
-        table = $('#example').DataTable({
+        table = $('#example').dataTable({
             "language": {
                 "url": "<c:url value="/resources/spanish.json" />"
             },
@@ -59,28 +61,27 @@
                 {
                     "mData": "idTipoEstadoPk",
                     "mRender": function (dato) {
-                        return  "<a class='various fancybox.ajax' href='/tipoestado/update/" + dato + "'>Editar</a>";
+                        return "<a class='various fancybox.ajax' href='/tipoestado/update/" + dato + "'>Editar</a>";
                     }
                 },
                 {
                     "mData": "idTipoEstadoPk",
                     "mRender": function (dato) {
-                        return  "<a href='#' onclick='js:a_onClick(" + dato + ")'>Eliminar</a>";
+                        return "<a href='#' onclick='js:a_onClick(" + dato + ")'>Eliminar</a>";
                     }
                 }
             ],
             "initComplete": function () {
                 $("#example tfoot th").each(function (i) {
                     if (i < ($("#example tfoot th").size() - 2)) {
-
                         var select = $('<select><option value=""></option></select>')
                                 .appendTo($(this).empty())
                                 .on('change', function () {
-                                    table.column(i)
+                                    table.api().column(i)
                                             .search('^' + $(this).val() + '$', true, false)
                                             .draw();
                                 });
-                        table.column(i).data().unique().sort().each(function (d, j) {
+                        table.api().column(i).data().unique().sort().each(function (d, j) {
                             select.append('<option value="' + d + '">' + d + '</option>')
                         });
                     }
