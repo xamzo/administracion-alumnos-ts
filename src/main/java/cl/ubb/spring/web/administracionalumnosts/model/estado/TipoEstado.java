@@ -1,7 +1,8 @@
 package cl.ubb.spring.web.administracionalumnosts.model.estado;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
 
 /**
@@ -15,7 +16,9 @@ public class TipoEstado {
     private long idTipoEstadoPk;
     @Column(nullable = false)
     private String nombreTipoEstado;
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "tipoEstado")
+
+    @JsonIgnore(true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tipoEstado")
     private List<Estado> estadoList;
 
     public long getIdTipoEstadoPk() {

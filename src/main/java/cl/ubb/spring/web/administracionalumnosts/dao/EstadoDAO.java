@@ -8,7 +8,6 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -27,27 +26,32 @@ public class EstadoDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    @Transactional
+
     public Estado findByPk(long id) {
         Criteria c = sessionFactory.getCurrentSession().createCriteria(Estado.class);
         c.add(Restrictions.eq("idEstadoPk", id));
         return (Estado) c.uniqueResult();
     }
 
-    @Transactional
+
     public List<Estado> findAll() {
         return (List<Estado>) sessionFactory.getCurrentSession().createCriteria(Estado.class).list();
     }
 
-    @Transactional
+
     public List<Estado> findAllByTipoEstado(TipoEstado t) {
         Criteria c = sessionFactory.getCurrentSession().createCriteria(Estado.class);
-        c.add(Restrictions.eq("idTipoEstadoFk", t.getIdTipoEstado()));
+        c.add(Restrictions.eq("idTipoEstadoFk", t.getIdTipoEstadoPk()));
         return (List<Estado>) c.list();
     }
 
-    @Transactional
+
     public void save(Estado e) {
         this.sessionFactory.getCurrentSession().save(e);
     }
+
+    public void delete(Estado t) {
+        this.sessionFactory.getCurrentSession().delete(t);
+    }
+
 }

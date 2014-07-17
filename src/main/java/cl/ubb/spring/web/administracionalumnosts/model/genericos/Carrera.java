@@ -1,4 +1,4 @@
-package cl.ubb.spring.web.administracionalumnosts.model;
+package cl.ubb.spring.web.administracionalumnosts.model.genericos;
 
 import javax.persistence.*;
 import java.util.List;

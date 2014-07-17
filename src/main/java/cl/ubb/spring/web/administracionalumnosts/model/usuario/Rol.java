@@ -1,4 +1,4 @@
-package cl.ubb.spring.web.administracionalumnosts.model;
+package cl.ubb.spring.web.administracionalumnosts.model.usuario;
 
 import javax.persistence.*;
 
@@ -10,11 +10,11 @@ import javax.persistence.*;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Table(name="rol")
+@Table(name = "rol")
 public class Rol {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
 

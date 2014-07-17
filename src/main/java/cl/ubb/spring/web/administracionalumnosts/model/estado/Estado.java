@@ -1,6 +1,7 @@
 package cl.ubb.spring.web.administracionalumnosts.model.estado;
 
 import javax.persistence.*;
+import java.util.List;
 
 /**
  * Created by w7600PC on 01/07/2014.
@@ -15,7 +16,7 @@ public class Estado {
     @Column(nullable = false)
     private String nombreEstado;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "idTipoEstadoFk", nullable = false)
     private TipoEstado tipoEstado;
 

@@ -1,7 +1,7 @@
 package cl.ubb.spring.web.administracionalumnosts.service;
 
 import cl.ubb.spring.web.administracionalumnosts.dao.UsuarioDAO;
-import cl.ubb.spring.web.administracionalumnosts.model.Usuario;
+import cl.ubb.spring.web.administracionalumnosts.model.usuario.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

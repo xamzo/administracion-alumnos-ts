@@ -1,17 +1,13 @@
 package cl.ubb.spring.web.administracionalumnosts.controller;
 
-import cl.ubb.spring.web.administracionalumnosts.model.Rol;
-import cl.ubb.spring.web.administracionalumnosts.model.Usuario;
+import cl.ubb.spring.web.administracionalumnosts.model.usuario.Usuario;
 import cl.ubb.spring.web.administracionalumnosts.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -45,9 +41,9 @@ public class HelloControler {
 //
 //        usuarioService.create(usuario);
 
-        List<Usuario> user=usuarioService.getAll();
-        System.out.println("lista de usuario111: "+user);
-        String mensaje="Bienvenido (Mensaje desde el controller MVC)";
+        List<Usuario> user = usuarioService.getAll();
+        System.out.println("lista de usuario111: " + user);
+        String mensaje = "Bienvenido (Mensaje desde el controller MVC)";
 
         ModelAndView model = new ModelAndView("index");
         model.addObject("mensaje", mensaje);
